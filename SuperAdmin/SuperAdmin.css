@@ -1,0 +1,202 @@
+:root {
+    --bg-color: #0d0f12;
+    --card-bg: #161a22;
+    --sti-blue: #00529b;
+    --sti-yellow: #fff200;
+    --neon-green: #39ff14;
+    --error-red: #ff3333;
+    --text-main: #ffffff;
+    --text-muted: #8b949e;
+    --border: #21262d;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    overflow: hidden;
+}
+
+.background-blobs {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.blob {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: var(--sti-yellow);
+    filter: blur(120px);
+    opacity: 0.05;
+    border-radius: 50%;
+}
+
+.blob-1 { top: -150px; right: -100px; }
+.blob-2 { bottom: -150px; left: -100px; background: var(--sti-blue); }
+
+.wrapper {
+    width: 100%;
+    max-width: 400px;
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    border: 2px solid var(--border);
+    margin: 20px;
+}
+
+
+.error-input {
+    border: 2px solid var(--error-red) !important;
+    background: rgba(255, 51, 51, 0.1) !important;
+}.error-msg {
+    color: #ff4d4d;
+    font-size: 0.8rem;
+    margin-top: 5px;
+    height: 1rem; /* Reserves space so the UI doesn't jump */
+    font-family: 'Inter', sans-serif;
+}
+
+input:focus {
+    border: 2px solid var(--sti-blue);
+    outline: none;
+}
+h1 { font-family: 'Orbitron', sans-serif; font-size: 24px; text-transform: uppercase; }
+
+.subtitle { color: var(--text-muted); font-size: 13px; margin-top: 6px; }
+
+.input-group { margin-bottom: 20px; }
+
+.input-group label { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; display: block; }
+
+.input-box input {
+    width: 100%;
+    height: 50px;
+    padding: 0 15px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.2);
+    color: var(--text-main);
+}
+
+.login-btn {
+    width: 100%;
+    height: 50px;
+    background: var(--neon-green);
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-weight: 900;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+#errorMsg {
+    display: none;
+    margin-top: 10px;
+    color: var(--error-red);
+    font-size: 12px;
+    text-align: center;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(13, 15, 18, 0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content { background: var(--card-bg); padding: 30px; border-radius: 12px; border: 1px solid var(--border); text-align: center; }
+
+.choice-btn { background: var(--neon-green); border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 15px; }
+/* Modern Loading Overlay */
+#loader-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(13, 15, 18, 0.85);
+    backdrop-filter: blur(8px);
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    color: var(--text-main);
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(255, 255, 255, 0.1);
+    border-top: 5px solid var(--neon-green);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loader-text {
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+.error-msg {
+    color: var(--error-red);
+    font-size: 11px;
+    margin-top: 8px;
+    height: 15px; /* Keeps the layout stable */
+    font-weight: 600;
+}
+
+.error-input {
+    border: 2px solid var(--error-red) !important;
+}
+
+
+/* Mobile-only overrides; original authentication design preserved */
+@media (max-width: 768px) {
+  html { -webkit-text-size-adjust: 100%; }
+  body { min-height: 100dvh; overflow-x: hidden; overflow-y: auto; padding: 16px 0; }
+  .background-blobs { overflow: hidden; pointer-events: none; }
+  .blob { width: min(500px, 90vw); height: min(500px, 90vw); }
+  .wrapper { width: calc(100% - 32px); max-width: 400px; margin: 12px 16px; padding: 28px 22px; }
+  .input-group, .input-box, .input-box input { min-width: 0; max-width: 100%; }
+  .input-box input { font-size: 16px; }
+  .popup { padding: 12px; overflow-y: auto; }
+  .popup-content { width: 100%; max-width: 420px; padding: 22px; }
+  #loader-overlay { padding: 16px; text-align: center; }
+}
+@media (max-width: 380px) {
+  .wrapper { padding: 22px 16px; border-radius: 16px; }
+  h1 { font-size: 21px; }
+  .login-btn { min-height: 48px; }
+}
+
+
+/* Dashboard theme colors for Super Admin sign-in. Defaults to existing dark look. */
+html[data-theme="light"] {--bg-color:#f0f2f5;--card-bg:#ffffff;--text-main:#1f2937;--text-muted:#6b7280;--border:#e5e7eb;--sti-blue:#3b82f6;--neon-green:#10b981;--error-red:#ef4444;}
+html[data-theme="dark"] {--bg-color:#0d0f12;--card-bg:#161a22;--text-main:#ffffff;--text-muted:#8b949e;--border:#21262d;--sti-blue:#007aff;--neon-green:#39ff14;--error-red:#ff3333;}
+html[data-theme] .wrapper,html[data-theme] .popup-content {background:var(--card-bg);border-color:var(--border);color:var(--text-main)}
+html[data-theme] .input-box input {color:var(--text-main);background:var(--bg-color);border-color:var(--border)}
+@media(max-width:768px) {html,body {max-width:100%;overflow-x:hidden}}

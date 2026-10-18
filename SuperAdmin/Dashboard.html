@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <title>Super Admin Dashboard</title>
+    <link rel="stylesheet" href="AdminDashboard.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h2 class="logo"><span class="sti-text">STI</span><span class="game-title"> Caloocan</span></h2>
+            <button id="themeToggle" class="theme-btn"><i class="bi bi-moon" id="themeIcon"></i></button>
+        </div>
+        <ul>
+            <li class="active"><a href="Dashboard.html"><i class="bi bi-speedometer2"></i> Pending Users</a></li>
+            <li><a href="ApproveUsers.html"><i class="bi bi-people"></i> Approve Users</a></li>
+            <li><a href="StudentsList.html"><i class="bi bi-archive"></i> Students</a></li>
+            <li onclick="showLogoutPopup()"><a href="#"><i class="bi bi-box-arrow-right"></i> LogOut</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <header>
+            <h1>Super Admin Dashboard</h1>
+        </header>
+
+        <div class="card">
+          
+            <div class="card">
+                <h3>Pending Users</h3>
+                <div class="actions-bar" style="margin: 15px 0; gap: 10px; display: flex;">
+                    <button id="bulkApprove" class="approve">Approve Selected</button>
+                    <button id="bulkReject" class="reject">Reject Selected</button>
+                </div>
+
+                <div id="feedback-message" class="feedback-box" style="display: none;">
+                    <p id="feedback-text"></p>
+                    <div id="feedback-actions" style="margin-top: 10px; gap: 10px; display: flex;">
+                        <button id="cancel-btn">Cancel</button>
+                        <button id="confirm-action-btn" class="danger">Confirm</button>
+                    </div>
+                </div>
+
+    <div class="table-responsive">
+        </div>
+</div>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" id="selectAllPending"></th>
+                            <th>Email</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+ <div id="logout-popup" class="logout-modal" style="display:none;">
+  <div class="logout-box">
+        <h3>Confirm Logout</h3>
+        <p>Are you sure you want to exit the dashboard?</p>
+    
+        <div class="modal-actions">
+            <button id="stayBtn" onclick="closeLogoutPopup()">Stay</button>
+            <button id="logoutBtn" class="danger" onclick="logoutUser()" style="background-color: #ff3333; color: white;">Logout</button>
+        </div>
+    </div>
+</div>
+<div id="action-popup" class="logout-modal" style="display:none;">
+    <div class="logout-box">
+        <h3 id="action-title">Confirm Action</h3>
+        <p id="action-text">Are you sure you want to perform this action?</p>
+        <div class="logout-btns">
+            <button onclick="document.getElementById('action-popup').style.display='none'">Cancel</button>
+            <button id="confirm-action-btn" class="danger">Confirm</button>
+        </div>
+    </div>
+</div>
+<div id="loading-overlay" class="loading-overlay">
+    <div class="loader-card">
+        <div class="spinner"></div>
+        <p style="color: var(--text-primary); font-size: 14px; font-weight: bold; margin: 0;">
+            PROCESSING...
+        </p>
+    </div>
+</div>
+
+<style>
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+</style>
+    <script type="module" src="SuperAdmin.js"></script>
+       
+</body>
+</html>

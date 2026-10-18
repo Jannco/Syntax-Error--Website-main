@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STI Caloocan | Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Login.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="wrapper">
+        <form id="loginForm">
+            <header class="header">
+                <div class="logo-container">
+                    <img src="codie_logo.png" alt="STI Logo" class="logo-img">
+                </div>
+                <h1>Sign In</h1>
+                <p class="subtitle">Access the Data Analysis Portal</p>
+            </header>
+
+            <div class="input-group">
+                <label>Email Address</label>
+                <div class="input-box">
+                    <i class="bi bi-envelope left-icon"></i>
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Password</label>
+                <div class="input-box">
+                    <i class="bi bi-lock left-icon"></i>
+                    <input type="password" id="password" placeholder="Enter password" required>
+                    <i class="bi bi-eye-slash toggle-password" id="togglePassword"></i>
+                </div>
+            </div>
+
+            <div class="form-row-options">
+                <label class="terms-label">
+                    <input type="checkbox" id="rememberMe">
+                    <span>Remember me</span>
+                </label>
+                <a href="#" id="forgotPasswordLink">Forgot Password?</a>
+            </div>
+
+            <div id="forgotPasswordSection" class="wrapper" style="display: none;">
+                <header class="header">
+                    <h1>Reset Password</h1>
+                    <p class="subtitle">Enter your email to receive a new password</p>
+                </header>
+                <div class="input-group">
+                    <input type="email" id="resetEmail" placeholder="Enter your email">
+                </div>
+                <button id="sendResetBtn" class="login-btn">Send New Password</button>
+                <button id="backToLogin" class="login-btn" style="background: gray;">Back</button>
+            </div>
+
+            <button type="submit" class="login-btn">Login</button>
+
+            <div class="register-link">
+                <p>Don't have an account? <a href="register.html">Register Now</a></p>
+            </div>
+        </form>
+    </div>
+
+    <div id="forgotPopup" class="popup">
+        <div class="popup-content">
+            <i class="bi bi-question-circle system-alert-icon" style="color: var(--sti-blue);"></i>
+            <p id="popup-message">Forgot your password? We can send a reset link to your email. Do you want to proceed?</p>
+            <div class="popup-actions">
+                <button id="confirmReset" class="choice-btn yes-btn">Yes, Send Email</button>
+                <button id="cancelReset" class="choice-btn" style="color:var(--error-red); border: 1px solid var(--error-red); margin-top:10px;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="emailFeedbackPopup" class="popup">
+        <div class="popup-content">
+            <i class="bi bi-envelope-check" style="font-size: 32px; color: var(--neon-green);"></i>
+            <h2 style="color: var(--text-main); margin: 10px 0;">Check Your Email</h2>
+            <p id="popup-message" style="color: var(--text-muted); margin-bottom: 20px;">
+                A password reset link has been sent to your email. Please check your <b>Inbox</b>, <b>Junk</b>, or <b>Drafts</b> folder.
+            </p>
+            <div class="popup-actions">
+                <button id="closeFeedbackBtn" class="choice-btn yes-btn">I UNDERSTAND</button>
+            </div>
+        </div>
+    </div>
+
+   <div id="otpPopup" class="popup">
+    <div class="popup-content">
+        <h2 style="font-family: 'Orbitron', sans-serif; color: var(--text-main); margin-bottom: 15px;">Enter Verification Code</h2>
+        <p style="margin-bottom: 8px; font-size: 13px; color: var(--text-muted);">A 6-digit code has been sent to your email.</p>
+      
+        <p style="margin-bottom: 20px; font-size: 11px; color: var(--text-muted); font-style: italic;">
+            Can't find the email in your Outlook inbox? Please check your <strong>Junk / Spam</strong> folder.
+        </p>
+        
+        <div class="input-group">
+            <div class="input-box">
+                <input type="text" id="otpInput" placeholder="Enter 6-digit PIN" maxlength="6" style="text-align: center; letter-spacing: 5px;">
+            </div>
+        </div>
+        
+        <button id="verifyOtpBtn" class="login-btn">Verify and Login</button>
+    </div>
+</div>
+    <script type="module" src="Login.js" defer></script>
+</body>
+</html>

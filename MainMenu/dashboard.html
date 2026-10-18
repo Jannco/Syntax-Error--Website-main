@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Analysis | Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Orbitron:wght@700;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="dashboard.js"></script>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="sidebar-header">
+        <h2 class="logo"><span class="sti-text">STI</span><span class="game-title"> Caloocan</span></h2>
+        <!-- Architectural Theme Switch Controller Toggle Button -->
+        <button id="theme-toggle" class="theme-btn" title="Toggle System Matrix Mode">
+            <i class="bi bi-moon-stars-fill"></i>
+        </button>
+    </div>
+    <ul>
+        <li class="active">
+            <a href="#"><i class="bi bi-speedometer2"></i> <span>Dashboard</span></a>
+        </li>
+        <li onclick="window.location.href='Students.html'">
+    <a href="#"><i class="bi bi-people"></i> <span>Students</span></a>
+        </li>
+        <li onclick="window.location.href='archive.html'">
+            <a href="#"><i class="bi bi-archive"></i> <span>Archive</span></a>
+        </li>
+        <li onclick="showLogoutPopup()">
+            <a href="#"><i class="bi bi-box-arrow-right"></i> <span>LogOut</span></a>
+        </li>
+    </ul>
+</div>
+
+<div class="main-content">
+    <header>
+        <h1>Analytics Overview</h1>
+        <p>Class Performance for: <span id="user-section-display">...</span></p>
+    </header>
+
+    <div class="stat-cards">
+        <div class="card stat">
+            <i class="bi bi-people-fill"></i>
+            <div><h2 id="total-students">0</h2><p>Total Students</p></div>
+        </div>
+        <div class="card stat at-risk-card">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <div><h2 id="at-risk-count">0</h2><p>At Risk (Critical)</p></div>
+        </div>
+        <div class="card stat mastery-card">
+            <i class="bi bi-check-circle-fill"></i>
+            <div><h2 id="mastery-rate">0%</h2><p>Mastery Rate</p></div>
+        </div>
+    </div>
+    
+
+    <div class="grid-layout">
+        <div class="card">
+            <h3>Difficulty Trend per Level</h3>
+            <div class="chart-container">
+                <canvas id="overallDifficultyChart"></canvas>
+            </div>
+        </div>
+
+       <div class="card">
+    <div class="top-controls" style="margin-bottom: 12px;">
+        <h3>Topic Difficulty Ranking</h3>
+        <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Hardest to Easiest</span>
+    </div>
+    <div id="mastery-distribution-list" class="leaderboard-list" style="max-height: 260px; overflow-y: auto;">
+        <!-- Dynamically populated from Firestore data -->
+        <li class="leaderboard-item empty-state">
+            <span>Loading topic analytics...</span>
+        </li>
+    </div>
+</div>
+        <div class="card">
+    <div class="top-controls">
+        <h3>Top 5 Performers</h3>
+        <select id="leaderboard-section-select">
+            <option value="">Select Section</option>
+        </select>
+    </div>
+    <ul id="leaderboard-list" class="leaderboard-list">
+        </ul>
+</div>
+
+        <div class="card full-width">
+            <div class="top-controls">
+                <h3>Detailed Topic Analysis</h3>
+                <select id="section-select">
+                    <option value="">All My Sections</option>
+                </select>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>C# Concept</th>
+                        <th>Avg. Difficulty</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="analytics-table"></tbody>
+            </table>
+        </div>
+    </div>
+    
+</div>
+
+<div id="logout-popup" class="logout-modal" style="display:none;">
+    <div class="logout-box">
+        <h3>Confirm Logout</h3>
+        <p>Are you sure you want to exit the dashboard?</p>
+        <div class="logout-btns">
+            <button class="btn-stay" onclick="closeLogoutPopup()">Stay</button>
+            <button class="danger" onclick="logoutUser()">Logout</button>
+        </div>
+    </div>
+</div>
+
+<div id="loading-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; z-index:9999; flex-direction:column; align-items:center; justify-content:center;">
+    <div class="spinner"></div>
+    <p class="loading-text">Fetching Data...</p>
+</div>
+
+</body>
+</html>

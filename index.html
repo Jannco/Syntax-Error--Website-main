@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syntax Error | STI Caloocan Thesis Project</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Orbitron:wght@500;900&display=swap" rel="stylesheet">
+    <!-- Bootstrap Icons CDN for system badges & arrows -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header / Navigation Bar -->
+    <header class="navbar">
+        <div class="logo">
+            <span class="sti-text">STI</span> <span class="game-title">[SYNTAX_ERROR]</span>
+        </div>
+        <div class="auth-buttons">
+            <span class="portal-label">Faculty Portal:</span>
+            <a href="Components/LogIn.html" class="btn btn-secondary">Sign In</a>
+            <a href="Components/register.html" class="btn btn-primary">Sign Up</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main class="hero-container">
+        <section class="game-intro">
+            <p class="school-tag">STI COLLEGE CALOOCAN • BSCS THESIS</p>
+            <h1>AN ERROR HAS OCCURRED. <br><span class="glitch-text">DEBUG THE SYSTEM.</span></h1>
+            
+            <div class="info-split">
+                <div class="info-block">
+                    <h2 class="block-title">&gt; FOR STUDENTS</h2>
+                    <p>Scan the QR code on the right using your mobile device to install the application and start completing coding tasks and challenges.</p>
+                </div>
+                
+                <div class="info-block">
+                    <h2 class="block-title">&gt; FOR TEACHERS</h2>
+                    <p>Register or log in to your account at the top right to access the <strong>Data Analysis Portal</strong>. Monitor real-time class performance and pinpoint specific student learning gaps.</p>
+                </div>
+            </div>
+
+            <div class="cta-actions">
+                <a href="#qr-section" class="btn btn-outline-neon btn-large">Scroll to QR Code</a>
+            </div>
+        </section>
+
+        <!-- 3D Interactive Card Section -->
+        <section id="qr-section" class="qr-container">
+            <div class="toggle-container">
+                <button id="btn-android" class="toggle-btn active">Android</button>
+                <button id="btn-ios" class="toggle-btn">iOS</button>
+            </div>
+
+            <div class="flip-card">
+                <div class="flip-card-inner" id="qr-card-inner">
+                    
+                    <!-- Android Front Card -->
+                    <div class="qr-card card-front">
+                        <h3>SCAN TO PLAY</h3>
+                        <p class="qr-sub">Mobile Android Build</p>
+                        
+                        <div class="qr-placeholder android-theme">
+                            <div class="qr-corner top-left"></div>
+                            <div class="qr-corner top-right"></div>
+                            <div class="qr-corner bottom-left"></div>
+                            <div class="qr-center-icon">
+                                <span class="code-symbol">&lt;/&gt;</span>
+                            </div>
+                        </div>
+                        <span class="status-badge">APK PENDING</span>
+                    </div>
+
+                    <!-- iOS Back Card -->
+                    <div class="qr-card card-back">
+                        <h3>SCAN TO PLAY</h3>
+                        <p class="qr-sub">Mobile iOS Build</p>
+                        
+                        <div class="qr-placeholder ios-theme">
+                            <div class="qr-corner top-left"></div>
+                            <div class="qr-corner top-right"></div>
+                            <div class="qr-corner bottom-left"></div>
+                            <div class="qr-center-icon">
+                                <span class="code-symbol">iOS</span>
+                            </div>
+                        </div>
+                        <span class="status-badge status-ios">TESTFLIGHT PENDING</span>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Problems & Solutions / System Core Purpose Section -->
+    <section class="impact-section">
+        <div class="section-title-wrap">
+            <h2>&gt; SYSTEM CORE PURPOSE</h2>
+            <p>Addressing key challenges faced by Grade 12 ICT C# Programming students and instructors.</p>
+        </div>
+
+        <div class="problems-solutions-grid">
+
+            <!-- Problem & Solution 1 -->
+            <div class="impact-card">
+                <div class="problem-box">
+                    <span class="badge problem-badge"><i class="bi bi-exclamation-triangle-fill"></i> Problem 01</span>
+                    <h3>Learning Pace & Syntax Confusion</h3>
+                    <p>Grade 12 ICT students often struggle with C# programming due to a lack of visual examples and slow learning pace. Complex blocks of code and frequent syntax errors cause distraction and loss of interest.</p>
+                </div>
+                <div class="solution-arrow"><i class="bi bi-arrow-down"></i></div>
+                <div class="solution-box">
+                    <span class="badge solution-badge"><i class="bi bi-check-circle-fill"></i> System Solution</span>
+                    <h3>Interactive Game-Based Learning</h3>
+                    <p>Provides interactive real-world challenges, syntax, and debugging exercises. This visual approach helps students retain concepts and creates a level playing field starting from Level 0.</p>
+                </div>
+            </div>
+
+            <!-- Problem & Solution 2 -->
+            <div class="impact-card">
+                <div class="problem-box">
+                    <span class="badge problem-badge"><i class="bi bi-exclamation-triangle-fill"></i> Problem 02</span>
+                    <h3>Limited PC Access Outside School</h3>
+                    <p>Survey data indicates <strong>40.3%</strong> of students lack personal computers at home, restricting practice strictly to 1.5 hours per week during lab classes and causing them to fall behind.</p>
+                </div>
+                <div class="solution-arrow"><i class="bi bi-arrow-down"></i></div>
+                <div class="solution-box">
+                    <span class="badge solution-badge"><i class="bi bi-check-circle-fill"></i> System Solution</span>
+                    <h3>Cross-Platform Mobile Application</h3>
+                    <p>Enables students to practice C# programming concepts directly on their smartphones anytime, anywhere—bridging the hardware accessibility gap for those without home PCs.</p>
+                </div>
+            </div>
+
+            <!-- Problem & Solution 3 -->
+            <div class="impact-card">
+                <div class="problem-box">
+                    <span class="badge problem-badge"><i class="bi bi-exclamation-triangle-fill"></i> Problem 03</span>
+                    <h3>Limited Student Progress Tracking</h3>
+                    <p>Teachers at STI College Caloocan have limited ways to monitor programming proficiency, relying heavily on standard eLMS or pen-and-paper, which lack detailed real-time insights.</p>
+                </div>
+                <div class="solution-arrow"><i class="bi bi-arrow-down"></i></div>
+                <div class="solution-box">
+                    <span class="badge solution-badge"><i class="bi bi-check-circle-fill"></i> System Solution</span>
+                    <h3>Web-Based Analytics Portal</h3>
+                    <p>Integrates live web data analysis so instructors can monitor time spent per level and instantly identify students who are stuck on specific concepts.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Developers Section -->
+    <section class="developers-section">
+        <div class="section-title-wrap">
+            <h2>&gt; DEVELOPMENT TEAM</h2>
+            <p>The minds behind the Syntax Error thesis project.</p>
+        </div>
+
+        <div class="developers-grid">
+            <!-- Developer 1 -->
+            <div class="developer-card">
+                <div class="dev-img-wrapper">
+                    <!-- Replace 'src' with image path when available -->
+                    <img src="" alt="Laila O. Angeles" class="dev-img" />
+                    <div class="dev-img-placeholder">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                </div>
+                <h3 class="dev-name">Laila O. Angeles</h3>
+                <span class="dev-role">Developer</span>
+            </div>
+
+            <!-- Developer 2 -->
+            <div class="developer-card">
+                <div class="dev-img-wrapper">
+                    <img src="" alt="Tristan Carl Bugas" class="dev-img" />
+                    <div class="dev-img-placeholder">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                </div>
+                <h3 class="dev-name">Tristan Carl Bugas</h3>
+                <span class="dev-role">Developer</span>
+            </div>
+
+            <!-- Developer 3 -->
+            <div class="developer-card">
+                <div class="dev-img-wrapper">
+                    <img src="" alt="John Vincent Co" class="dev-img" />
+                    <div class="dev-img-placeholder">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                </div>
+                <h3 class="dev-name">John Vincent Co</h3>
+                <span class="dev-role">Developer</span>
+            </div>
+
+            <!-- Developer 4 -->
+            <div class="developer-card">
+                <div class="dev-img-wrapper">
+                    <img src="" alt="Cristian Condez" class="dev-img" />
+                    <div class="dev-img-placeholder">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                </div>
+                <h3 class="dev-name">Cristian Condez</h3>
+                <span class="dev-role">Developer</span>
+            </div>
+        </div>
+    </section>
+
+    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+        <i class="bi bi-chevron-up"></i>
+    </button>
+    <script src="script.js"></script>
+</body>
+</html>

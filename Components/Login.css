@@ -1,0 +1,426 @@
+:root {
+    --bg-color: #0d0f12;
+    --card-bg: #161a22;
+    --sti-blue: #00529b;
+    --sti-yellow: #fff200;
+    --neon-green: #39ff14;
+    --error-red: #ff3333;
+    --text-main: #ffffff;
+    --text-muted: #8b949e;
+    --border: #21262d;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    overflow-x: hidden;
+    position: relative;
+}
+
+.background-blobs {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.blob {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: var(--sti-yellow);
+    filter: blur(120px);
+    opacity: 0.05;
+    border-radius: 50%;
+}
+
+.blob-1 { top: -150px; right: -100px; }
+.blob-2 { bottom: -150px; left: -100px; background: var(--sti-blue); }
+
+/* --- MAIN INTERFACE CARD --- */
+.wrapper {
+    width: 100%;
+    max-width: 400px;
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    border: 2px solid var(--border);
+    margin: 20px;
+}
+
+/* --- SIDE-BY-SIDE OPTIONS ROW (Remember Me & Forgot Password) --- */
+.form-row-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.form-row-options a {
+    color: var(--text-muted);
+    font-size: 12px;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.form-row-options a:hover {
+    color: var(--neon-green);
+}
+
+/* --- Back Button Styling --- */
+.back-btn {
+    background: transparent !important;
+    border: 1px solid var(--border) !important;
+    color: var(--text-muted) !important;
+    margin-top: 10px;
+    box-shadow: none !important;
+}
+
+.back-btn:hover {
+    background: var(--card-bg) !important;
+    color: var(--text-main) !important;
+    border-color: var(--text-muted) !important;
+}
+
+/* --- HEADER SYSTEM --- */
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo-container {
+    background: transparent; 
+    padding: 5px;
+    display: inline-block;
+    margin-bottom: 15px;
+    cursor: default;
+    filter: drop-shadow(0 0 10px rgba(0, 82, 155, 0.4));
+}
+
+.logo-img {
+    width: 90px; 
+    height: auto;
+    display: block;
+    user-select: none;  
+    -webkit-user-drag: none;
+}
+
+h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 24px;
+    color: var(--text-main);
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-top: 6px;
+    letter-spacing: 0.5px;
+}
+
+/* --- CONFIGURING FORM ELEMENTS --- */
+.input-group {
+    margin-bottom: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.input-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.input-box input {
+    width: 100%;
+    height: 50px;
+    padding: 0 48px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--text-main);
+    background: rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+.input-box input:focus {
+    outline: none;
+    border-color: var(--neon-green);
+    background: rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 15px rgba(57, 255, 20, 0.15);
+}
+
+/* --- FIXED PLACEMENT ICON RENDERING --- */
+.left-icon {
+    position: absolute;
+    left: 16px;
+    font-size: 18px;
+    color: var(--text-muted);
+    pointer-events: none;
+    z-index: 10;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 16px;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-size: 18px;
+    z-index: 10;
+    padding: 4px;
+}
+
+.toggle-password:hover {
+    color: var(--text-main);
+}
+
+/* --- TERMS AND CHECKBOX LAYOUT --- */
+.terms-group {
+    margin: 15px 0 20px;
+    text-align: left;
+}
+
+.terms-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-muted);
+    cursor: pointer;
+    user-select: none;
+}
+
+.terms-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--neon-green);
+    cursor: pointer;
+}
+
+.terms-label a {
+    color: var(--neon-green);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.terms-label a:hover {
+    text-decoration: underline;
+}
+
+/* --- ERROR DISCOVERY LOGIC FEEDBACK --- */
+.input-group.error label {
+    color: var(--error-red);
+}
+
+.input-group.error .input-box input {
+    border-color: var(--error-red);
+    background-color: rgba(255, 51, 51, 0.02);
+}
+
+.input-group.error .left-icon {
+    color: var(--error-red);
+}
+
+.error-tooltip {
+    color: var(--error-red);
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- PRIMARY SUBMIT SYSTEM ACTION --- */
+.login-btn {
+    width: 100%;
+    height: 50px;
+    background: var(--neon-green);
+    color: #000000;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 15px;
+    font-weight: 900;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.2s ease;
+    box-shadow: 0 0 15px rgba(57, 255, 20, 0.3);
+}
+
+.login-btn:hover {
+    background: var(--text-main);
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
+    transform: translateY(-1px);
+}
+
+/* --- ARCHITECTURE LINKING FOOTER --- */
+.register-link {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.register-link a {
+    color: var(--neon-green);
+    text-decoration: none;
+    font-weight: 700;
+    margin-left: 4px;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+/* --- POPUP DIALOG INTERACTION WINDOWS --- */
+.popup {
+    display: none; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(13, 15, 18, 0.7);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px); 
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.popup-content {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    max-width: 360px;
+    width: 100%;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    border: 2px solid var(--border);
+    animation: zoomIn 0.2s ease-out;
+}
+
+.system-alert-icon {
+    font-size: 32px;
+    color: var(--error-red);
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+#popup-message {
+    font-size: 14px;
+    color: var(--text-main);
+    line-height: 1.5;
+    font-weight: 500;
+}
+
+.popup-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.choice-btn {
+    width: 100%;
+    height: 44px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+}
+
+.yes-btn {
+    background-color: transparent;
+    border: 1px solid var(--neon-green);
+    color: var(--neon-green);
+}
+
+.yes-btn:hover {
+    background-color: rgba(57, 255, 20, 0.1);
+    box-shadow: 0 0 15px rgba(57, 255, 20, 0.2);
+}
+
+@keyframes zoomIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.input-group.error .input-box {
+    border: 2px solid red !important;
+}
+
+.error-tooltip {
+    margin-top: 5px;
+    display: none;
+}
+
+/* Container for the Feedback Popup */
+#emailFeedbackPopup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+#sendResetBtn, #closeFeedbackBtn {
+    margin-top: 20px;
+    padding: 12px 20px;
+    width: 100%;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+#sendResetBtn { background-color: var(--neon-green); color: #000; }
+#closeFeedbackBtn { background-color: #333; color: #fff; }

@@ -1,0 +1,1085 @@
+    <!DOCTYPE html>
+
+    <html lang="en" data-theme="light">
+
+    <head>
+
+        <meta charset="UTF-8">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>SyntaxError Analytics | Students</title>
+
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Orbitron:wght@700;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="dashboard.css">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+        <script type="module" src="Students.js"></script>
+
+    </head>
+
+    <body>
+
+
+
+    <div class="sidebar">
+
+        <div class="sidebar-header">
+
+            <h2 class="logo"><span class="sti-text">STI</span><span class="game-title"> Caloocan</span></h2>
+
+            <button id="theme-toggle" class="theme-btn" title="Toggle System Mode">
+
+                <i class="bi bi-moon-stars-fill"></i>
+
+            </button>
+
+        </div>
+
+        <ul>
+
+            <li onclick="window.location.href='dashboard.html'">
+
+                <a href="#"><i class="bi bi-speedometer2"></i> <span>Dashboard</span></a>
+
+            </li>
+
+            <li class="active">
+
+                <a href="#"><i class="bi bi-people"></i> <span>Students</span></a>
+
+            </li>
+
+            <li onclick="window.location.href='archive.html'">
+
+                <a href="#"><i class="bi bi-archive"></i> <span>Archive</span></a>
+
+            </li>
+
+            <li onclick="showLogoutPopup()">
+
+                <a href="#"><i class="bi bi-box-arrow-right"></i> <span>LogOut</span></a>
+
+            </li>
+
+        </ul>
+
+    </div>
+
+
+
+    <div class="main-content">
+
+    <header class="header-container">
+
+        <div class="header-title">
+
+            <div class="student-progress-title-row">
+
+                <div>
+
+                    <h1>Student Progress Management</h1>
+
+                    <p>Current Sections: <span id="user-section">Loading...</span></p>
+
+                </div>
+
+                <button type="button" class="download-template-btn" onclick="downloadExcelTemplate()" title="Download the Excel format used for class-list importing">
+
+                    <i class="bi bi-file-earmark-arrow-down"></i>
+
+                    <span>Download Excel Template</span>
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+
+
+        <div class="student-controls card">
+
+            <select id="section-select">
+
+                <option value="">Loading sections...</option>
+
+            </select>
+
+
+
+
+
+            <div class="action-group" style="display: flex; gap: 10px; align-items: center;">
+
+                <input type="file" id="excel-input" accept=".xlsx, .xls" style="display: none;">
+
+                <button onclick="document.getElementById('excel-input').click()" style="background: var(--bg-color); color: var(--text-main); border: 1px solid var(--border); padding: 8px 12px; border-radius: 6px; cursor: pointer;">
+
+                    <i class="bi bi-file-earmark-excel"></i> <span id="file-name-text">Choose File</span>
+
+                </button>
+
+                <button onclick="importExcel()" style="background: #3b82f6; color: white;">
+
+                    <i class="bi bi-upload"></i> Import Class List
+
+                </button>
+
+                <button type="button" onclick="openAddStudentModal()" class="add-student-btn">
+
+                    <i class="bi bi-person-plus"></i> Add Student
+
+                </button>
+
+                <button onclick="handlePasswordReset()" style="background: #f59e0b; color: white; padding: 8px 12px; border-radius: 6px; border: none; cursor: pointer;">
+
+                    <i class="bi bi-shield-lock"></i> Reset Password
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+        <!-- STAT & CHART SECTION -->
+
+    <div class="stat-cards stat-cards-responsive">
+
+
+
+        <!-- Online / Total Students Card -->
+
+        <div class="card stat" style="display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 8px;">
+
+            <h3>Online Students</h3>
+
+            <h2 style="font-size: 2rem; color: var(--stat-icon, #3b82f6);">
+
+                <span id="online-count">0</span> / <span id="card-total-students">0</span>
+
+            </h2>
+
+            <p style="font-size: 0.8rem; color: var(--text-muted);">Online / Total Students</p>
+
+        </div>
+
+
+
+        <!-- Section Game Difficulty Pie Chart -->
+
+        <div class="card" style="padding: 16px;">
+
+            <h3>Section Hardest Concepts</h3>
+
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">
+
+                Students struggling per concept in selected section
+
+            </p>
+
+            <div style="position: relative; height: 200px; width: 100%;">
+
+                <canvas id="sectionPieChart"></canvas>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Overall Section Comparison Column Chart -->
+
+        <div class="card" style="padding: 16px;">
+
+            <h3>Overall Comparison</h3>
+
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">
+
+                Students facing issues per concept across all sections
+
+            </p>
+
+            <div style="position: relative; height: 200px; width: 100%;">
+
+                <canvas id="overallColumnChart"></canvas>
+
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+    <div class="card student-table-card">
+
+
+
+        <div class="student-table-search">
+
+            <i class="bi bi-search" aria-hidden="true"></i>
+
+
+
+            <input type="text" id="search-student" placeholder="Search by name or ID...">
+
+        </div>
+
+
+
+        <div class="table-responsive">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Student ID</th>
+
+                        <th>Full Name</th>
+
+                        <th>Game Progress</th>
+
+                        <th>Status</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+
+
+                <tbody id="students-table">
+
+                    <tr>
+
+                        <td colspan="5" style="text-align:center;">
+
+                            Select a section to load students
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+
+    </div>
+
+        <div id="analysis-section" class="student-analysis-grid" style="display: none; margin-top: 30px;">
+
+            <div class="analysis-box" id="student-info-card">
+
+                <h4>Student Details</h4>
+
+                <div id="student-details-content">Select a student to see details</div>
+
+            </div>
+
+
+
+            <div class="analysis-box">
+
+                <h4>Recent Level Attempts</h4>
+
+                <div id="attempts-list">No data available</div>
+
+            </div>
+
+
+
+            <div style="background: var(--card-bg, #161a22); border: 1px solid var(--border, #21262d); border-radius: 12px; padding: 16px;">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <h3 style="font-size: 1rem; color: #fff; margin: 0;">Difficulty Trend</h3>
+
+                    <span style="font-size: 0.75rem; color: #8b949e;">Easy (0-3) | Moderate (4-6) | Hard (7-10)</span>
+
+                </div>
+
+
+
+                <!-- CHART CANVAS TARGET -->
+
+                <div style="position: relative; height: 180px; width: 100%;">
+
+                    <canvas id="difficultyTrendChart"></canvas>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="card analysis-tier">
+
+                <h3><i class="bi bi-person"></i> Student Learning Gaps</h3>
+
+                <div id="student-analysis"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div id="confirm-modal" class="modal-overlay" style="display:none;">
+
+        <div class="confirm-box">
+
+            <i class="bi bi-exclamation-circle-fill" style="font-size: 2.5rem; color: #f59e0b;"></i>
+
+            <h3 id="confirm-title" style="margin-top: 15px; font-weight: 600;">Archive Student?</h3>
+
+            <p id="confirm-message" style="color: #6b7280; margin: 10px 0 25px; line-height: 1.5;">
+
+                This student will be moved to the archive. You have 7 days to restore them before they are deleted permanently.
+
+            </p>
+
+            <div class="confirm-btns" style="display: flex; gap: 12px; justify-content: center;">
+
+                <button onclick="closeConfirmModal()" style="background: #f3f4f6; border: none; padding: 10px 25px; border-radius: 8px; cursor: pointer; font-weight: 500;">Cancel</button>
+
+                <button id="confirm-action-btn" style="background: #ef4444; color: white; border: none; padding: 10px 25px; border-radius: 8px; cursor: pointer; font-weight: 500;">Confirm Archive</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div id="custom-archive-modal" class="modal-overlay" style="display:none;">
+
+        <div class="archive-modal-box">
+
+            <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f3f4f6; padding-bottom: 15px; margin-bottom: 15px;">
+
+                <h3 style="font-size: 1.2rem; font-weight: 600;"><i class="bi bi-archive"></i> Archived Students</h3>
+
+                <button onclick="closeArchiveModal()" style="background: none; border: none; font-size: 1.8rem; cursor: pointer; color: #9ca3af;">&times;</button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <p style="font-size: 0.85rem; color: #ef4444; margin-bottom: 15px;">
+
+                    <i class="bi bi-info-circle"></i> These students are scheduled for deletion. Click 'Restore' to move them back to the active list.
+
+                </p>
+
+                <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+
+                    <table style="width: 100%; border-collapse: collapse;">
+
+                        <thead>
+
+                            <tr style="background: #f9fafb; text-align: left;">
+
+                                <th style="padding: 12px;">Name</th>
+
+                                <th style="padding: 12px;">Section</th>
+
+                                <th style="padding: 12px;">Action</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="archived-students-table">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div id="edit-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:10000; align-items:center; justify-content:center;">
+
+        <div style="background:white; padding:30px; border-radius:12px; width:90%; max-width:450px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);">
+
+            <h3 style="margin-top:0; color:#1e293b; font-size:1.25rem;">Update Student Information</h3>
+
+
+
+            <div style="margin-bottom: 15px;">
+
+                <label style="display:block; font-size:0.8rem; font-weight:bold; color:#64748b; margin-bottom:5px;">STUDENT NUMBER</label>
+
+                <input type="text" id="edit-id-input" style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:6px; box-sizing: border-box;">
+
+            </div>
+
+
+
+            <div style="margin-bottom: 15px;">
+
+                <label style="display:block; font-size:0.8rem; font-weight:bold; color:#64748b; margin-bottom:5px;">FULL NAME</label>
+
+                <input type="text" id="edit-name-input" style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:6px; box-sizing: border-box;">
+
+            </div>
+
+
+
+            <div style="margin-bottom: 20px;">
+
+                <label style="display:block; font-size:0.8rem; font-weight:bold; color:#64748b; margin-bottom:5px;">BIRTHDAY (YYYY-MM-DD)</label>
+
+                <input type="date" id="edit-birthday-input" style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:6px; box-sizing: border-box;">
+
+            </div>
+
+
+
+            <div style="display:flex; gap:10px; justify-content:flex-end;">
+
+                <button onclick="closeEditModal()" style="background:#f1f5f9; color:#475569; border:none; padding:10px 20px; border-radius:6px; cursor:pointer; font-weight:600;">Cancel</button>
+
+                <button id="save-edit-btn" style="background:#3b82f6; color:white; border:none; padding:10px 20px; border-radius:6px; cursor:pointer; font-weight:600;">Save Changes</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <!-- ADD STUDENT MODAL -->
+
+    <div id="add-student-modal" class="modal-overlay add-student-modal" style="display:none;">
+
+        <div class="add-student-box">
+
+            <div class="add-student-modal-header">
+
+                <div>
+
+                    <h3><i class="bi bi-person-plus"></i> Add Student Manually</h3>
+
+                    <p>Enter the same information used by the Excel class-list template.</p>
+
+                </div>
+
+                <button type="button" onclick="closeAddStudentModal()" class="add-student-close" aria-label="Close">&times;</button>
+
+            </div>
+
+
+
+            <div class="add-student-section-note">
+
+                <i class="bi bi-info-circle"></i>
+
+                <span>Student will be added to: <strong id="add-student-section-name">Select a section first</strong></span>
+
+            </div>
+
+
+
+            <div class="add-student-form-grid">
+
+                <div class="add-student-field full-width">
+
+                    <label for="add-student-id">STUDENT NUMBER <span>*</span></label>
+
+                    <input type="text" id="add-student-id" placeholder="e.g. 2000252385" autocomplete="off">
+
+                </div>
+
+
+
+                <div class="add-student-field">
+
+                    <label for="add-student-surname">SURNAME <span>*</span></label>
+
+                    <input type="text" id="add-student-surname" placeholder="Surname" autocomplete="family-name">
+
+                </div>
+
+
+
+                <div class="add-student-field">
+
+                    <label for="add-student-first-name">FIRST NAME <span>*</span></label>
+
+                    <input type="text" id="add-student-first-name" placeholder="First name" autocomplete="given-name">
+
+                </div>
+
+
+
+                <div class="add-student-field full-width">
+
+                    <label for="add-student-last-name">LAST NAME <span>*</span></label>
+
+                    <input type="text" id="add-student-last-name" placeholder="Last name" autocomplete="additional-name">
+
+                </div>
+
+
+
+                <div class="add-student-field full-width">
+
+                    <label for="add-student-email">STUDENT EMAIL <span>*</span></label>
+
+                    <input type="email" id="add-student-email" placeholder="student@example.com" autocomplete="email">
+
+                </div>
+
+
+
+                <div class="add-student-field full-width">
+
+                    <label for="add-student-birthday">BIRTHDAY <span>*</span></label>
+
+                    <input type="date" id="add-student-birthday">
+
+                    <small>Password will automatically use the birthday in YYYYMMDD format.</small>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="add-student-actions">
+
+                <button type="button" onclick="closeAddStudentModal()" class="add-student-cancel">Cancel</button>
+
+                <button type="button" id="save-add-student-btn" onclick="saveManualStudent()" class="add-student-save">
+
+                    <i class="bi bi-person-check"></i> Add Student
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Reset Password Modal -->
+
+    <div id="reset-password-modal" class="modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; justify-content:center; align-items:center;">
+
+        <div style="background:white; padding:25px; border-radius:12px; width:420px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
+
+            <h3 style="margin-top:0; color:#1e293b; display:flex; align-items:center; gap:10px;">
+
+                <i class="bi bi-shield-lock"></i> Reset Password
+
+            </h3>
+
+
+
+            <!-- STEP 1: Search and Select -->
+
+            <div id="reset-step-1">
+
+                <label style="display:block; font-size:11px; font-weight:bold; color:#64748b; margin-bottom:5px;">1. SELECT SECTION</label>
+
+                <select id="reset-section-select" style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #d1d5db; border-radius:6px; background:#f8fafc;"></select>
+
+
+
+                <label style="display:block; font-size:11px; font-weight:bold; color:#64748b; margin-bottom:5px;">2. SEARCH NAME OR STUDENT ID</label>
+
+                <div style="position:relative; margin-bottom:15px;">
+
+                    <input type="text" id="reset-search-input" placeholder="Type name or ID..."&#x20;
+
+                        style="width:100%; padding:10px; border:1px solid #3b82f6; border-radius:6px; box-sizing: border-box;">
+
+                </div>
+
+
+
+                <label style="display:block; font-size:11px; font-weight:bold; color:#64748b; margin-bottom:5px;">3. CHOOSE FROM LIST</label>
+
+                <select id="reset-student-select" size="5" style="width:100%; padding:5px; border:1px solid #d1d5db; border-radius:6px; cursor:pointer; min-height:120px;">
+
+                    <option value="" disabled selected>Select a section first...</option>
+
+                </select>
+
+
+
+                <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:20px;">
+
+                    <button onclick="closeResetModal()" style="padding:8px 15px; background:#f1f5f9; border:none; border-radius:6px; cursor:pointer; color:#475569;">Cancel</button>
+
+                    <button onclick="confirmResetSelection()" style="padding:8px 20px; background:#3b82f6; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:500;">Next</button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- STEP 2: Password Entry -->
+
+            <div id="reset-step-2" style="display:none;">
+
+                <div style="background:#fff7ed; border:1px solid #ffedd5; padding:12px; border-radius:8px; margin-bottom:20px;">
+
+                    <p id="reset-confirm-text" style="font-size:14px; color:#9a3412; margin:0;"></p>
+
+                </div>
+
+
+
+                <label style="display:flex; font-size:11px; font-weight:bold; color:#64748b; margin-bottom:5px;">ENTER NEW PASSWORD</label>
+
+                <input type="password" id="new-password-input" placeholder="Min. 4 characters" style="width:100%; padding:12px; margin-bottom:20px; border:1px solid #d1d5db; border-radius:6px;">
+
+
+
+                <div style="display:flex; gap:10px; justify-content:flex-end;">
+
+                    <button onclick="backToStep1()" style="padding:8px 15px; background:#f1f5f9; border:none; border-radius:6px; cursor:pointer;">Back</button>
+
+                    <button id="final-reset-btn" style="padding:8px 20px; background:#f59e0b; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">Update Password</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div id="logout-popup" class="logout-modal" style="display:none;">
+
+        <div class="logout-box">
+
+            <h3>Confirm Logout</h3>
+
+            <p>Are you sure you want to exit?</p>
+
+            <div class="logout-btns">
+
+                <button onclick="closeLogoutPopup()">Stay</button>
+
+                <button class="danger" onclick="logoutUser()">Logout</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- STUDENT DETAILS MODAL -->
+
+    <div id="student-details-modal" class="modal-overlay" style="display: none;">
+
+        <div class="student-modal-box">
+
+
+
+            <!-- Close Button -->
+
+            <button onclick="closeStudentModal()" class="close-student-btn" aria-label="Close Modal">&times;</button>
+
+
+
+            <div class="modal-grid-container">
+
+
+
+                <!-- LEFT COLUMN: Quick Stats -->
+
+                <div class="modal-left-col">
+
+
+
+                    <div class="student-info-header">
+
+                        <h2 id="modal-student-name">Student Name</h2>
+
+                        <p id="modal-student-id">0000000000</p>
+
+                        <p id="modal-student-birthday">Birthday: --</p>
+
+                    </div>
+
+
+
+                    <!-- Status Highlight Card -->
+
+                    <div id="status-card" class="side-stat-card status-box">
+
+                        <div class="icon-circle">
+
+                            <i class="bi bi-check-lg"></i>
+
+                        </div>
+
+                        <div>
+
+                            <strong id="modal-status-title">Good Progress</strong>
+
+                            <p id="modal-short-summary">Proceeding with manageable difficulty.</p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Progress Card -->
+
+                    <div class="side-stat-card">
+
+                        <div class="icon-wrap text-red">
+
+                            <i class="bi bi-x-circle"></i>
+
+                        </div>
+
+                        <div>
+
+                            <span>Progress</span>
+
+                            <h4 id="modal-progress">0%</h4>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Idle Time Card -->
+
+                    <div class="side-stat-card">
+
+                        <div class="icon-wrap text-blue">
+
+                            <i class="bi bi-clock"></i>
+
+                        </div>
+
+                        <div>
+
+                            <span>Idle Time</span>
+
+                            <h4 id="modal-idle">0m</h4>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Difficulty Card -->
+
+                    <div class="side-stat-card">
+
+                        <div class="icon-wrap text-orange">
+
+                            <i class="bi bi-bar-chart"></i>
+
+                        </div>
+
+                        <div>
+
+                            <span>Difficulty Score</span>
+
+                            <h4 id="modal-difficulty">0/10</h4>
+
+                        </div>
+
+                    </div>
+
+                <!-- Ranking for this student, directly below Difficulty Score -->
+                <section class="student-topic-ranking" aria-labelledby="student-topic-ranking-title">
+                                        <div class="student-topic-ranking-head">
+                                            <div>
+                                                <h3 id="student-topic-ranking-title"><i class="bi bi-bar-chart-steps"></i> Topic Difficulty Ranking</h3>
+                                                <p>Individual student's recorded C# topics</p>
+                                            </div>
+                                            <span class="student-topic-ranking-sort">Hardest to Easiest</span>
+                                        </div>
+                                        <div id="student-topic-ranking-list" class="student-topic-ranking-list" aria-live="polite">
+                                            <p class="student-topic-ranking-empty">Select a student to view topic ranking.</p>
+                                        </div>
+                                    </section>
+
+                </div>
+
+                <!-- RIGHT COLUMN: Chart & Detailed Analysis -->
+
+                <div class="modal-right-col">
+
+
+
+                    <!-- CHART SECTION -->
+
+                    <div class="chart-section">
+
+                        <div class="chart-header">
+
+                            <h3>Concept Difficulty</h3>
+
+                            <div class="chart-legend">
+
+                                <span><span class="dot easy"></span> Easy (0-3 wrong)</span>
+
+                                <span><span class="dot moderate"></span> Moderate (4-6 wrong)</span>
+
+                                <span><span class="dot hard"></span> Hard (7+ wrong)</span>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Responsive Container for Chart -->
+
+                        <div class="student-chart-box" style="min-height: 300px;">
+
+                            <canvas id="modalDifficultyChart"></canvas>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- LEARNING PROGRESS BY ATTEMPT -->
+
+                    <div class="chart-section attempt-progress-section">
+
+                        <div class="attempt-progress-header">
+
+                            <div class="attempt-progress-title">
+
+                                <h3>Learning Progress by Attempt</h3>
+
+                                <p>Track whether the student's wrong attempts are decreasing.</p>
+
+                            </div>
+
+
+
+                            <div class="attempt-subject-control">
+
+                                <label for="attempt-subject-select">Main Subject:</label>
+
+                                <select id="attempt-subject-select">
+
+                                    <option value="">Select Subject</option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div id="attempt-summary-cards" class="attempt-summary-cards">
+
+                            <div class="attempt-summary-card attempt-first-card">
+
+                                <span class="attempt-card-label">1st Attempt</span>
+
+                                <strong id="first-attempt-wrongs" class="attempt-card-value">--</strong>
+
+                                <small>Wrong Attempts</small>
+
+                            </div>
+
+
+
+                            <div class="attempt-summary-card attempt-second-card">
+
+                                <span class="attempt-card-label">2nd Attempt</span>
+
+                                <strong id="second-attempt-wrongs" class="attempt-card-value">--</strong>
+
+                                <small>Wrong Attempts</small>
+
+                            </div>
+
+
+
+                            <div class="attempt-summary-card attempt-third-card">
+
+                                <span class="attempt-card-label">3rd Attempt</span>
+
+                                <strong id="third-attempt-wrongs" class="attempt-card-value">--</strong>
+
+                                <small>Wrong Attempts</small>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div id="attempt-improvement-summary" class="attempt-improvement-summary">
+
+                            Select a main subject to view the student's improvement.
+
+                        </div>
+
+
+
+                        <div class="student-chart-box attempt-chart-box">
+
+                            <canvas id="attemptProgressChart"></canvas>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- BOTTOM GRID LAYOUT -->
+
+                    <div class="analysis-bottom-grid">
+
+
+
+                        <!-- Learning Analysis Box -->
+
+                        <div class="analysis-card">
+
+                            <h3><i class="bi bi-diagram-3"></i> Concept-Level Breakdown</h3>
+
+                            <p class="analysis-subtext">Granular view of student errors per concept</p>
+
+
+
+                            <div id="modal-concept-breakdown" class="concept-scroll-box">
+
+                                <p class="empty-concept-text">Select a student to view concept performance.</p>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Key Indicators Box -->
+
+                        <div class="analysis-card key-indicators-card">
+
+                            <h3><i class="bi bi-lightning-charge"></i> Key Indicators</h3>
+
+
+
+                            <div class="indicator-item">
+
+                                <span>Weakest Topic:</span>
+
+                                <strong id="modal-weakest-topic">--</strong>
+
+                            </div>
+
+
+
+                            <div class="indicator-item">
+
+                                <span>Performance:</span>
+
+                                <span id="modal-performance-text" class="status-badge">On Track</span>
+
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+
+
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div id="loading-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; z-index:9999; flex-direction:column; align-items:center; justify-content:center;">
+
+        <div class="spinner"></div>
+
+        <p class="loading-text">Fetching Data...</p>
+
+    </div>
+
+
+
+    <style>
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    </style>
+
+
+
+    </body>
+
+    </html>
